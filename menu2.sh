@@ -10,7 +10,8 @@
 
 #un menu 
 
-let menuitem
+INPUT=/tmp/menu.sh.$$
+
 
 dialog --clear  --backtitle "Programa parseador" \
 --title "[ P R O G R A M A -- P R I N C I P A L ]" \
@@ -22,9 +23,9 @@ Nombre "Indica el nombre del admin OpenLDAP" \
 Servidor "Indica el nombre del servidor" \
 Extension "Indica la extensión del servidor" \
 Origencsv "Indica el nombre del fichero CSV a leer" \
-# Salir "Salir del script" 2>"${INPUT}"
+Salir "Salir del script" 2>"${INPUT}"
 
-menuitem=$?
+menuitem=$(<"${INPUT}")
 
 echo $menuitem
 sleep 1
