@@ -1,4 +1,10 @@
 # ParseadorCSVaLDIF
+
+
+<img src="https://i.ibb.co/zGxH7J0/Picture1.png">
+
+
+
 Abre un archivo CSV previamente saneado y logra un .LDIF listo para añadir al dominio
 
 Todo esto se podría hacer mediante un script y pasándole los parámetros, pero vamos a ir un poco más allá y a crear un menú gráfico (en ASCII) que lo haga.
@@ -20,3 +26,5 @@ no veririfica que el objeto este bien construido, no funciona con CSV no curados
 MEJORAS;
 Hacerlo en Python que es un lenguaje más moderno y sencillo
 Pasar de dialog a XDialog.
+
+
