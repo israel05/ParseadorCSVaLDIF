@@ -1,22 +1,34 @@
 #!/bin/bash
-#crea un dialogo con titulo, tipo mensajito, de 20 de ancho por 40 de largo
-#dialog --title "Inicio" --msgbox 'Script parseador de CSV a LDIF simplre' 6 30
+# crea un dialogo con titulo, tipo mensajito, de 20 de ancho por 40 de largo
+# dialog --title "Inicio" --msgbox 'Script parseador de CSV a LDIF simplre' 6 30
 
 
-#un menu con cabeza de página
-#dialog --begin 10 30 --backtitle "Programa parseador" \
-#--title "Información" \
-#--msgbox 'El parseador es un programe en pruebas, no lo use en explotacion.' 10 30
+# un menu con cabeza de página
+# dialog --begin 10 30 --backtitle "Programa parseador" \
+# --title "Información" \
+# --msgbox 'El parseador es un programe en pruebas, no lo use en explotacion.' 10 30
 
-
+# creo una variable para pasar entre las diferentes funciones los datos de vuelta
 let retornoLlamadaAdialogo
-function llamadaAdialogo(){
+#creo un grupo de variables que alamacenan toda la información de la conexión
+let nombreArchivoCSV
+let usuarioAdministradorLDAP
+let primerparteDominio
+let segundaparteDominio
+
+
+# funcion llamadaAdialogoOrigencsv, pide el nombre del archivo csv que se va a leer, 
+# previamente saneado y en la misma carpeta dónde está este script
+# recibe: ningun parámetro
+# devuelve: ningún parámetro, pero escribe en una variable global
+
+function llamadaAdialogoOrigencsv(){
 OUTPUT="/tmp/input.txt"
 
 # Dibuja el InpuntBox
-dialog --title "El nombre del admin LDAP" \
+dialog --title "El nombre del archivo CSV a parsear" \
 --backtitle "Parseador de CSV a LDIP" \
---inputbox "Indica el nombre del admin LDAP (suele ser admin)" 8 60 2>$OUTPUT
+--inputbox "Indica el nombre del archivo CSV que está en esta carpeta para parsear (ejemplo.csv)" 8 60 2>$OUTPUT
 
 # lee lo que está escribiendo el usuario
 respose=$?
@@ -49,10 +61,13 @@ INPUT=/tmp/menu.sh.$$
 
 
 dialog --clear  --backtitle "Programa parseador" \
---title "[ P R O G R A M A -- P R I N C I P A L ]" \
---menu "Ve eligiendo las diferentes opciones y asegurate \n\
+--title "[ P R O G R A M A -- P A R S E A D O R ]" \
+--menu "Ve eligiendo las diferentes opciones en orden y asegurate \n\
 de tener todo listo antes de empezar \n\
-Es aconsajable ir en orden.\n\
+En la parte superior se ve la cadena que estás componiendo.\n\
+Voy a usar el archivo; $nombreArchivoCSV \n\
+Y me voy a conectar con las credenciales; dn: cn=$usuarioAdministradorLDAP,dc=$primerparteDominio,dc=$segundaparteDominio. \n\
+\n\
 Elige una opcón" 20 60 20 \
 Nombre "Indica el nombre del admin OpenLDAP" \
 Servidor "Indica el nombre del servidor" \
@@ -69,7 +84,7 @@ case $menuitem in
 	Nombre) echo "Elegiste nombre";;
 	Servidor) echo "Elegiste servidor";;
 	Extension) echo "Elegiste extension";;
-	Origencsv) echo "Elegiste origen"; llamadaAdialogo;;
+	Origencsv) echo "Elegiste origen"; llamadaAdialogoOrigencsv;;
 	Exit) echo "Bye"; break;;
 esac
 
