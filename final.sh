@@ -196,7 +196,7 @@ INPUT=/tmp/menu.sh.$$
 dialog --clear  --backtitle "Programa parseador" \
 --title "[ P R O G R A M A -- P A R S E A D O R ]" \
 --menu "Elige las  opciones en orden y asegurate \n\
-de tener todo listo antes de empezar \n\
+de tener \Zb\Z1 todo listo antes de empezar \n\
 En la parte inferior se ve la cadena que estás componiendo.\n\
 Voy a usar el archivo; $nombreArchivoCSV \n\
 Y me voy a conectar con las credenciales; dn: cn=$usuarioAdministradorLDAP,dc=$primerparteDominio,dc=$segundaparteDominio. \n\
