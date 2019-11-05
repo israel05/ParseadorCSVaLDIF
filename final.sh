@@ -16,8 +16,9 @@ let usuarioAdministradorLDAP
 let primerparteDominio
 let segundaparteDominio
 
+salirDelScript=10
 
-# funcion llamadaAdialogoOrigencsv, pide el nombre del archivo csv que se va a leer, 
+# funcion llamadaAdialogoOrigencsv, pide el nombre del archivo csv que se va a leer,
 # previamente saneado y en la misma carpeta dónde está este script
 # recibe: ningun parámetro
 # devuelve: ningún parámetro, pero escribe en una variable global
@@ -33,7 +34,7 @@ dialog --title "El nombre del archivo CSV a parsear" \
 # lee lo que está escribiendo el usuario
 respose=$?
 
-# lee lo que hay en OUTPUT usando la redireccion $OUPUT 
+# lee lo que hay en OUTPUT usando la redireccion $OUPUT
 name=$(<$OUTPUT)
 
 # Entra en el case
@@ -48,8 +49,82 @@ esac
 rm /tmp/input.txt
 
 #hace un retorno de la variable
-retornoLlamadaAdialogo=$name
+nombreArchivoCSV=$name
 }
+
+# funcion llamadaAdialogoServidor, pide el nombre del archivo csv que se va a leer,
+# previamente saneado y en la misma carpeta dónde está este script
+# recibe: ningun parámetro
+# devuelve: ningún parámetro, pero escribe en una variable global
+
+function llamadaAdialogoServidor(){
+OUTPUT="/tmp/input.txt"
+
+# Dibuja el InpuntBox
+dialog --title "La primera parte del nombre del dominio" \
+--backtitle "Parseador de CSV a LDIP" \
+--inputbox "Indica la primera parte del nombre de tu dominio (Endor, Yavin)" 8 60 2>$OUTPUT
+
+# lee lo que está escribiendo el usuario
+respose=$?
+
+# lee lo que hay en OUTPUT usando la redireccion $OUPUT
+name=$(<$OUTPUT)
+
+# Entra en el case
+case $respose in
+  0) echo "hola $name" ;;
+  1) echo "Cancel pressed." ;;
+  255) echo "[ESC] key pressed."
+esac
+
+
+#borrar ese archivo temporal que solo guarda mierda
+rm /tmp/input.txt
+
+#hace un retorno de la variable
+primerparteDominio=$name
+}
+
+
+
+
+
+# funcion llamadaAdialogoExtension, pide el nombre del archivo csv que se va a leer,
+# previamente saneado y en la misma carpeta dónde está este script
+# recibe: ningun parámetro
+# devuelve: ningún parámetro, pero escribe en una variable global
+
+function llamadaAdialogoExtension(){
+OUTPUT="/tmp/input.txt"
+
+# Dibuja el InpuntBox
+dialog --title "La segunda parte del nombre del dominio" \
+--backtitle "Parseador de CSV a LDIP" \
+--inputbox "Indica la segunda parte del nombre de tu dominio (com o ally)" 8 60 2>$OUTPUT
+
+# lee lo que está escribiendo el usuario
+respose=$?
+
+# lee lo que hay en OUTPUT usando la redireccion $OUPUT
+name=$(<$OUTPUT)
+
+# Entra en el case
+case $respose in
+  0) echo "hola $name" ;;
+  1) echo "Cancel pressed." ;;
+  255) echo "[ESC] key pressed."
+esac
+
+
+#borrar ese archivo temporal que solo guarda mierda
+rm /tmp/input.txt
+
+#hace un retorno de la variable
+segundaparteDominio=$name
+}
+
+
 
 
 
@@ -77,17 +152,19 @@ echo $menuitem
 sleep 1
 
 case $menuitem in
-	Nombre) echo "Elegiste nombre";;
-	Servidor) echo "Elegiste servidor";;
-	Extension) echo "Elegiste extension";;
+	Nombre) echo "Elegiste nombre"; llamadaAdialogoNombreAdmin;;
+	Servidor) echo "Elegiste servidor"; llamadaAdialogoServidor;;
+	Extension) echo "Elegiste extension"; llamadaAdialogoExtension;;
 	Origencsv) echo "Elegiste origen"; llamadaAdialogoOrigencsv;;
-	Exit) echo "Bye"; break;;
+	Salir) echo "Bye";  echo $salirDelScript; salirDelScript=100;;
 esac
 
 }
 
+#bucle principal
 
-
-dibujarMenu;
-echo "FINAL"
-echo $retornoLlamadaAdialogo
+while  [ $salirDelScript -eq 10 ]
+do
+    dibujarMenu;
+done
+echo "SALGO DEL SCRIPT"
