@@ -53,13 +53,9 @@ retornoLlamadaAdialogo=$name
 
 
 
-
-
-#un menu 
-
+# es el menu que se dibuja una y otra vez en bucle hasta que el usuario termine
+function dibujarMenu(){
 INPUT=/tmp/menu.sh.$$
-
-
 dialog --clear  --backtitle "Programa parseador" \
 --title "[ P R O G R A M A -- P A R S E A D O R ]" \
 --menu "Ve eligiendo las diferentes opciones en orden y asegurate \n\
@@ -88,5 +84,10 @@ case $menuitem in
 	Exit) echo "Bye"; break;;
 esac
 
+}
+
+
+
+dibujarMenu;
 echo "FINAL"
 echo $retornoLlamadaAdialogo
