@@ -1,0 +1,15 @@
+dn: uid=Muhammed MacIntyre,ou=people,dc=mandalore,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Muhammed MacIntyre
+sn: Muhammed MacIntyre
+uid: Muhammed
+uidNumber: 11111
+gidNumber: 11111
+userPassword: password
+homeDirectory: /home/Muhammed
+loginShell: /bin/bash
+gecos: 11111
+description: User account
+
