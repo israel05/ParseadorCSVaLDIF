@@ -121,6 +121,8 @@ function parsearElCSV(){
   	echo $frasecompuesta >>salida.ldif
   	frasecompuesta="gecos: $c2"
   	echo $frasecompuesta >>salida.ldif
+	frasecompuesta="gidNumber: $c1"
+	echo $frasecompuesta >>salida.ldif
   	frasecompuesta="description: User account"
   	echo $frasecompuesta >>salida.ldif
 
